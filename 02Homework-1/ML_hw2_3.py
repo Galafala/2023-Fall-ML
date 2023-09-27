@@ -6,14 +6,15 @@ from pathlib import Path
 from ML_hw2_1 import fit_model, predict
 
 ROOT = Path(__file__).parent
+M = 3
+N = 2
 
 def scatter_plot(x, y, position, title='', xlabel='', ylabel=''):
-    plt.subplot(3,2,position)
+    plt.subplot(M,N,position)
     plt.scatter(x, y)
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-
 
 def main():
     maturity = [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 48, 60, 72, 84, 96, 108, 120]
@@ -52,12 +53,12 @@ def main():
     
     scatter_plot(Xtrain, residuals[3], 3, xlabel="Maturity", ylabel="4D's Residuals")
 
-    plt.subplot(3, 2, 4)
+    plt.subplot(M, N, 4)
     plt.hist(np.array(residuals).ravel())
     plt.xlabel("Residuals")
     plt.ylabel("Frequency")
 
-    ax = plt.subplot(3, 2, 5)
+    ax = plt.subplot(M, N, 5)
     residuals = np.array(residuals).ravel()
     sm.qqplot(residuals, line='45', fit=True, ax=ax)
 
