@@ -6,7 +6,7 @@ from pathlib import Path
 from ML_hw2_1 import fit_model, predict
 
 ROOT = Path(__file__).parent
-M = 3
+M = 4
 N = 2
 
 def scatter_plot(x, y, position, title='', xlabel='', ylabel=''):
@@ -16,8 +16,15 @@ def scatter_plot(x, y, position, title='', xlabel='', ylabel=''):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
+def calcualte_residual(train, pd):
+    return train-pd
+
 def main():
-    maturity = [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 48, 60, 72, 84, 96, 108, 120]
+    maturity = [1, 3, 6, 9, 
+                12, 15, 18, 21, 
+                24, 30, 36, 48, 
+                60, 72, 84, 96, 
+                108, 120]
     yields = [7.571, 7.931, 7.977, 7.996,  
               8.126, 8.247, 8.298, 8.304,  
               8.311, 8.327, 8.369, 8.462, 
@@ -30,9 +37,9 @@ def main():
     Xtrain = maturity.reshape(-1,1)
     Ytrain = yields.reshape(-1,1)
 
-    plt.figure(figsize=(12,12*1.5))
+    plt.figure(figsize=(12,20))
 
-    scatter_plot(maturity, yields, 1, xlabel="Maturity", ylabel="Yields")
+    scatter_plot(maturity, yields, (1,2), title="(a)", xlabel="Maturity", ylabel="Yields")
 
     models = []
     for d in [1, 2, 3, 4, 5, 6]:
@@ -42,25 +49,32 @@ def main():
     for _, r2 in models:
         r2s.append(r2)
 
-    scatter_plot(np.linspace(1,6,6), r2s, 2, xlabel="Dimension", ylabel="R^2")
+    scatter_plot(np.linspace(1,6,6), r2s, (3,4), title="(b)", xlabel="Order", ylabel="adjust-R-square")
 
     residuals = []
 
     for d, model in enumerate(models, 1):
         y_pd = predict(model=model[0], x=Xtrain, d=d)
-        residual = Ytrain-y_pd
+        residual = calcualte_residual(Ytrain, y_pd)
         residuals.append(residual)
     
-    scatter_plot(Xtrain, residuals[3], 3, xlabel="Maturity", ylabel="4D's Residuals")
+    residual = residuals[3] # 4D model
 
-    plt.subplot(M, N, 4)
-    plt.hist(np.array(residuals).ravel())
+    scatter_plot(Xtrain, residual, (5,6), title="(c)", xlabel="Maturity", ylabel="4D's Residuals")
+    plt.axhline(0, c='red', linestyle='--')
+
+    residual = np.array(residual).ravel()
+
+    plt.subplot(M, N, 7)
+    plt.hist(residual, bins=6, edgecolor='black')
+    plt.title("(d) Histogram")
     plt.xlabel("Residuals")
     plt.ylabel("Frequency")
 
-    ax = plt.subplot(M, N, 5)
-    residuals = np.array(residuals).ravel()
-    sm.qqplot(residuals, line='45', fit=True, ax=ax)
+    ax = plt.subplot(M, N, 8)
+    plt.title("(d) qq Plot")
+    sm.qqplot(residual, line='45', fit=True, ax=ax)
+    # plt.ylim([-1.5,1.5])
 
     plt.tight_layout()
     plt.savefig(f"{ROOT}/hw2-3.jpg")
