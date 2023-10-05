@@ -23,6 +23,7 @@ def fit_model(x, y, d, show=True):
         print(f'inter: {polynomial_model.intercept_}')
         print(f'r^2: {quad_r2}')
 
+
     return (polynomial_model, quad_r2)
 
 def predict(model, x, d):
