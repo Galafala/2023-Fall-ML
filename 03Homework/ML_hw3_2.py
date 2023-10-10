@@ -54,7 +54,7 @@ def main():
         plt.plot(Xtrain, y_pd, label=f'D={d}')
 
     plt.legend()
-    
+
     plt.subplot(3,2,6)
     plt.bar(dimensions-0.1, AICs, label='AIC', width=0.2)
     plt.bar(dimensions+0.1, BICs, label='BIC', width=0.2)
@@ -65,7 +65,7 @@ def main():
 
     plt.tight_layout()
     plt.legend()
-    plt.savefig('03Homework/ML_hw3-2.jpg')
+    plt.savefig('03Homework/hw3-2.jpg')
 
 if __name__ == "__main__":
     main()
