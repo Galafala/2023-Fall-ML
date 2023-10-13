@@ -10,7 +10,7 @@
 |Credit	|3|
 |Full/Half Yr.	|Half|
 |Required/Elective	|Elective|
-|Time	|Monday 7,8(14:20~16:20)Thursday 7(14:20~15:10)|
+|Time	|Monday 7, 8(14:20\~16:20) Thursday 7(14:20\~15:10)|
 |Place	|生機201|
 
 ## Course Syllabus
